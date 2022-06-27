@@ -1,4 +1,3 @@
-debugger;
 $(document).ready(function(){
      $('#btnAtivar').on("click", function() {
           var user = $("#usuario").val();
@@ -8,20 +7,21 @@ $(document).ready(function(){
           if(user == "" || pass == ""){
                $('#btnAtivar').removeClass('btn-primary');
                $('#btnAtivar').addClass('btn-danger');
-               $('#btnAtivar').attr('disabled', 'disabled');   
+               $('#btnAtivar').attr('disabled', 'disabled');
+               $('#btnAtivar').text('Erro ao ativar');      
+               $('#ext-aviso').show(); 
                $('#ext-aviso').html('Extens√£o n√£o ativada'); 
                $('#ext-aviso').removeClass('alert-success');
                $('#ext-aviso').addClass('alert-danger');
-
-          }
-
+               setTimeout(returnToDefault, 3000);
+          } 
           $.ajax({
               
-               url: 'http://localhost/login/login.php',
+               url: 'http://localhost/8.20/loginUsuarioSlim.php',
                type: 'POST',
                data :{
-                    usuario : user,
-                    senha : pass
+                    cdusuario : user,
+                    cdsenha : pass
                },
 
                
@@ -29,8 +29,7 @@ $(document).ready(function(){
                success: function(response){
                     if(response == "Extens√£o ativada"){
                          $('#chkAtivo').prop('checked', true);
-                         $('.aviso').html(response);
-
+                         $('.aviso').text('Extens„o est· ativa');
                     }
                },
                dataType: 'text',
@@ -39,9 +38,15 @@ $(document).ready(function(){
      });
 });
 
-
-
-
+function returnToDefault(){
+     $('#btnAtivar').addClass('btn-primary');
+     $('#btnAtivar').removeClass('btn-danger');
+     $('#btnAtivar').removeAttr('disabled'); 
+     $('#btnAtivar').text('Ativar Extens„o');    
+     $('#ext-aviso').hide(); 
+     $('#ext-avis').hide(); 
+     
+}
 
 
 /*$(document).on("submit", "#meuform",function (e) {

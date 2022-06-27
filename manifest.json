@@ -1,6 +1,6 @@
 {
     "manifest_version" : 2,
-    "name" : "QIgonore X Frame",
+    "name" : "Integrador Qualitor x Teams",
     "description" : "Extensão que permite ao Teams carregar o Qualitor, quando este estiver com protocolo SAML ativado",
     "version" : "1.0",
     "browser_action" : {
