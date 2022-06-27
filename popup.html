@@ -1,0 +1,51 @@
+<?php session_start();?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/qignore.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="ext-header">
+            <div class="ext-header-nome">
+                QIgnore X-Frame
+            </div>
+            <div class="ext-header-logo">
+                <img src="images/32.png">
+            </div>
+        </div>
+        <form id="meuform" method="POST">
+            <div class="form-group">
+                <input class="form-control" type="text" id="usuario" name="usuario" placeholder="Usuario">
+            </div>
+            
+            <div class="form-group">
+                <input class="form-control" type="password" id="senha" name="senha" placeholder="Senha">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" id="btnAtivar">Ativar Extensão</button>
+            </div>
+        </form>
+
+        <span class="alert alert-success text-center" id="ext-aviso">
+            Ativado com sucesso
+        </span>
+        
+        <div class="">
+            <input type="checkbox" name="chkAtivo" id="chkAtivo">
+        </div>
+        <span class="aviso">
+            Extensão Ativada
+        </span>
+    </div>
+
+    <script src="jquery.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+*
+{
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.hide-chk
+{
+    display: none;
+}
+
+.container
+{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 280px;
+    position: relative;
+}
+
+.ext-header
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(244, 244, 250);
+    margin-bottom: 16px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 8px;
+}
+
+.ext-header-nome
+{
+    color: rgb(28, 27, 27);
+    font-weight: 700;
+}
+
+.btn
+{
+    width: 100%;
+}
+
+.aviso
+{
+    font-size: 12px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
