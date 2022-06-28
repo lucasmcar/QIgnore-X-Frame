@@ -42,6 +42,8 @@ let updateRgx = function(){
     });
 }
 
+//framework\login\request\solicitante\getLogin.php e framework\login\request\atendente\getLogin.php
+
 updateRgx();
 
 let portFromCS;
