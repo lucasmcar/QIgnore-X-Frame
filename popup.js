@@ -2,31 +2,7 @@ let regexPadrao = ["<all_urls>", "*://servicedesk.rodobens.com.br", "*://adfs.ro
 
 let port = browser.runtime.connect({name: 'port-from-cs'});
 
-browser.storage.local.get(null, res => {
-     //let rgxstr = (res.regstr_allowed || regexPadrao);
-     let lista = document.querySelector('#lista');
-     for(var i = 0; i<regexPadrao.length; i++){
-          let tagLi = document.createElement('li');
-          tagLi.appendChild(document.createTextNode(regexPadrao[i]));
-          lista.appendChild(tagLi);
-     }
-     document.querySelector("#chkAtivo").checked = res.is_disabled;
-});
-
-
-window.onload = function(){
-     let dsv_checkbox = $('#chkAtivo');
-
-     dsv_checkbox.change(function(){
-          port.postMessage({
-               is_disabled : dsv_checkbox.checked
-          });
-     });
-}
-
-
-
-/*$(document).ready(function(){
+$(document).ready(function(){
      $('#btnAtivar').on("click", function() {
           var user = $("#usuario").val();
           var pass = $("#senha").val();
@@ -52,19 +28,36 @@ window.onload = function(){
                     cdsenha : pass
                },
 
-               
-
                success: function(response){
-                    if(response == "ExtensÃ£o ativada"){
-                         $('#chkAtivo').prop('checked', true);
-                         $('.aviso').text('Extensão está ativa');
+                    if(response == "Extensão ativada"){
+                         browser.storage.local.get(null, res => {
+                              //let rgxstr = (res.regstr_allowed || regexPadrao);
+                              let lista = document.querySelector('#lista');
+                              for(var i = 0; i<regexPadrao.length; i++){
+                                   let tagLi = document.createElement('li');
+                                   tagLi.appendChild(document.createTextNode(regexPadrao[i]));
+                                   lista.appendChild(tagLi);
+                              }
+                              document.querySelector("#chkAtivo").checked = res.is_disabled;
+                         });
+                         
+                         
+                         window.onload = function(){
+                              let dsv_checkbox = $('#chkAtivo');
+                         
+                              dsv_checkbox.change(function(){
+                                   port.postMessage({
+                                        is_disabled : dsv_checkbox.checked
+                                   });
+                              });
+                         }
                     }
                },
                dataType: 'text',
 
           });
      });
-});*/
+});
 
 function returnToDefault(){
      $('#btnAtivar').addClass('btn-primary');
