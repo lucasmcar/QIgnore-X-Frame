@@ -1,6 +1,6 @@
-let regexPadrao = ["<all_urls>", "*://servicedesk.rodobens.com.br", "*://adfs.rodobens.com.br"].join('\n');
+//let regexPadrao = ["<all_urls>", "*://servicedesk.rodobens.com.br", "*://adfs.rodobens.com.br"].join('\n');
 
-let port = browser.runtime.connect({name: 'port-from-cs'});
+//let port = browser.runtime.connect({name: 'port-from-cs'});
 
 let user         = document.querySelector('#usuario');
 let senha        = document.querySelector('#senha');
@@ -29,8 +29,15 @@ ativarExtensao.addEventListener('click', function(e){
                cdsenha : senha.value
           }
 
-          fetch(`http://localhost/8.20/getAuthExtension.php?nmusuariorede=${data.nmusuariorede}&cdsenha=${data.cdsenha}`)
-          .then(r => {
+          fetch(`http://localhost/8.20/getAuthExtension.php?nmusuariorede=${data.nmusuariorede}&cdsenha=${data.cdsenha}`, {
+               headers: {
+               Accept: "application/json",
+               "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify(data)
+          }).then((r) => r.json())
+            .then(r => {
                     if(r.ok){
                          form.setAttribute('hidden', 'hidden');
                          avisoSucesso.removeAttribute('hidden', 'hidden');
@@ -39,6 +46,7 @@ ativarExtensao.addEventListener('click', function(e){
                          aviso.innerHTML = "Extensão está ativada";
                          setTimeout(hiddenSucess, 3000);
                     }
+                    console.log(r)
                }).catch((error) => {
                     console.log(error)
           });
