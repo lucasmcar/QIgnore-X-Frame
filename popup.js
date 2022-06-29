@@ -2,7 +2,77 @@ let regexPadrao = ["<all_urls>", "*://servicedesk.rodobens.com.br", "*://adfs.ro
 
 let port = browser.runtime.connect({name: 'port-from-cs'});
 
-$(document).ready(function(){
+let user         = document.querySelector('#usuario');
+let senha        = document.querySelector('#senha');
+let form         = document.querySelector('#meuform');
+let avisoCampos  = document.querySelector("#ext-aviso-campo");
+let avisoSucesso  = document.querySelector("#ext-aviso");
+let checkbox      = document.querySelector("input[name=chkAtivo]");
+let aviso = document.querySelector(".aviso");
+const ativarExtensao = document.querySelector('#btnAtivar');
+
+ativarExtensao.addEventListener('click', function(e){
+     
+     e.preventDefault();
+     
+     if(!verificaCampos()){
+          form.setAttribute('hidden', 'hidden');
+          avisoCampos.removeAttribute('hidden', 'hidden');
+          checkbox.checked = false;
+          setTimeout(showForm, 3000);
+          aviso.innerHTML = "Extens„o est· desativada";
+          return false;
+     } else {
+
+          let data = {
+               nmusuariorede : user.value,
+               cdsenha : senha.value
+          }
+
+          fetch(`http://localhost/8.20/getAuthExtension.php?nmusuariorede=${data.nmusuariorede}&cdsenha=${data.cdsenha}`)
+          .then(r => {
+                    if(r.ok){
+                         form.setAttribute('hidden', 'hidden');
+                         avisoSucesso.removeAttribute('hidden', 'hidden');
+                         setTimeout(showForm, 3000);
+                         checkbox.checked = true;
+                         aviso.innerHTML = "Extens„o est· ativada";
+                         setTimeout(hiddenSucess, 3000);
+                    }
+               }).catch((error) => {
+                    console.log(error)
+          });
+     }
+         
+});
+
+const verificaCampos = function(){ 
+     if(user.value == "" && senha.value == ""){
+          return false;
+     }
+     return true;
+}
+
+const hideLoading = function(){
+     icon.classList.add('hidden-icon');
+     icon.classList.remove('icon');
+}
+
+
+const showForm = function() {
+     form.removeAttribute('hidden', 'hidden');
+     avisoCampos.setAttribute('hidden', 'hidden');
+}
+
+const hiddenSucess = function (){
+     avisoSucesso.setAttribute('hidden', 'hidden');
+} 
+
+url = window.location.href + '';
+
+console.log(url)
+
+/*$(document).ready(function(){
      $('#btnAtivar').on("click", function() {
           var user = $("#usuario").val();
           var pass = $("#senha").val();
@@ -21,15 +91,16 @@ $(document).ready(function(){
           } 
           $.ajax({
               
-               url: 'http://localhost/8.20/loginUsuarioSlim.php',
+               url: 'http://localhost/8.20/framework/login/request/atendente/getLogin.php',
                type: 'POST',
                data :{
                     cdusuario : user,
                     cdsenha : pass
                },
-
+               dataType: 'text',
                success: function(response){
-                    if(response == "Extens„o ativada"){
+                    console.log(response);
+                    /*if(response == "Extens„o ativada"){
                          browser.storage.local.get(null, res => {
                               //let rgxstr = (res.regstr_allowed || regexPadrao);
                               let lista = document.querySelector('#lista');
@@ -51,13 +122,11 @@ $(document).ready(function(){
                                    });
                               });
                          }
-                    }
-               },
-               dataType: 'text',
-
-          });
-     });
-});
+                    }*/
+              // }
+          //})
+     //});*/
+//});
 
 function returnToDefault(){
      $('#btnAtivar').addClass('btn-primary');
@@ -68,20 +137,3 @@ function returnToDefault(){
      $('#ext-avis').hide(); 
      
 }
-
-
-/*$(document).on("submit", "#meuform",function (e) {
-    e.preventDefault();
-
-    var meuform = $(this);
-
-    $.ajax({
-       type: "POST",
-       url: meuform.attr("action"), //Pega o action do FORM
-       data: meuform.serialize() //Pega os campos do FORM
-   }).done(function (resposta) {
-        alert('ok'); //Exibe a resposta
-   }).fail(function (xhr, status) {
-        alert("erro:" + status); //Exibe na requisi√ß√£o Ajax
-   });
-});*/

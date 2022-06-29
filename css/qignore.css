@@ -16,7 +16,7 @@
     justify-content: center;
     flex-direction: column;
     box-sizing: border-box;
-    width: 300px;
+    width: 400px;
     position: relative;
 }
 
@@ -49,4 +49,22 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
+}
+
+.icon
+{
+    height: 32px;
+    width: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.hidden-icon{
+    display: none;
+}
+
+.hide{
+    display: none;;
 }

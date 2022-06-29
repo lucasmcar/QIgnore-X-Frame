@@ -1,4 +1,3 @@
-<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,17 +31,26 @@
                 <button class="btn btn-primary" id="btnAtivar">Ativar Extensão</button>
             </div>
         </form>
-        <ul id="lista"></ul>
+
+        <div id="hidden-icon" class="hidden-icon">
+            <img src="images/spinner.gif">
+        </div>
+
+        <span class="alert alert-danger text-center" id="ext-aviso-campo" hidden>
+            Campos Usu�rio e/ou senha devem ser preenchidos
+        </span>
+
+        
 
         <span class="alert alert-success text-center" id="ext-aviso" hidden>
             Ativado com sucesso
         </span>
         
-        <div class="">
+        <div class="hide-chk">
             <input type="checkbox" name="chkAtivo" id="chkAtivo">
         </div>
         <span class="aviso">
-            Extensão Ativada
+           
         </span>
     </div>
 
