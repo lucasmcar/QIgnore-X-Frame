@@ -2,7 +2,7 @@
     "manifest_version" : 2,
     "name" : "Integrador Qualitor x Teams",
     "description" : "Extensão que permite ao Teams carregar o Qualitor, quando este estiver com protocolo SAML ativado",
-    "version" : "1.0.3",
+    "version" : "1.0.4",
     "icons" :{
         "64" : "images/64.png",
         "128" : "images/128.png"
@@ -15,7 +15,7 @@
         "default_popup" : "popup.html"
     },
     "background" : {
-        "scripts" : ["background.js"]
+        "scripts" : ["moz-background.js", "chrome-background.js"]
     },
     "permissions" : [
         "http://*/*",
