@@ -1,6 +1,6 @@
-//let regexPadrao = ["<all_urls>", "*://servicedesk.rodobens.com.br", "*://adfs.rodobens.com.br"].join('\n');
+let regexPadrao = ["<all_urls>", "*://servicedesk.rodobens.com.br", "*://adfs.rodobens.com.br"].join('\n');
 
-//let port = browser.runtime.connect({name: 'port-from-cs'});
+let port = browser.runtime.connect({name: 'port-from-cs'});
 
 let user         = document.querySelector('#usuario');
 let senha        = document.querySelector('#senha');
@@ -43,8 +43,12 @@ ativarExtensao.addEventListener('click', function(e){
                          form.setAttribute('hidden', 'hidden');
                          avisoSucesso.removeAttribute('hidden', 'hidden');
                          setTimeout(showForm, 3000);
-                         checkbox.checked = true;
-                         aviso.innerHTML = "Extens�o est� ativada";
+
+                         port.postMessage({is_disabled : checkbox.checked});
+                         port.onMessage.addEventListener(function(m){
+                              m.is_disabled;
+                              aviso.innerHTML = "Extens�o est� ativada";
+                         });
                          setTimeout(hiddenSucess, 3000);
                          clearInput();
                     } else {
