@@ -21,21 +21,18 @@ let setHeader = function(e){
 }
 
 let updateRgx = function(){
-    browser.storage.local.get(null, res => {
-        var rgxstr = (res.regstr_allowed || rgxPadrao);
+    browser.storage.local.get(null, function(res) {
+        var regstr = (res.regstr_allowed || rgxPadrao);
         browser.webRequest.onHeaderReceived.removeListener(setHeader);
         if(!res.is_disabled){
-            regex = new RegExp(rgxstr.split("\n").map(
+            regex = new RegExp(regstr.split("\n").map(
                 x=>x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')	// Sanitize regex
 					.replace(/(^<all_urls>|\\\*)/g,"(.*?)")	// Allow wildcards
 					.replace(/^(.*)$/g,"^$1$")).join("|")	// User multi match
             )
             browser.webRequest.onHeaderReceived.addEventListener(
                 setHeader, 
-                {
-                    urls: ["<all_urls>", "adfs.rodobens.com.br", "servicedesk.rodobens.com.br"], 
-                    types: ["sub_frame", "object"]
-                },
+                {urls: ["<all_urls>", "adfs.rodobens.com.br", "servicedesk.rodobens.com.br"], types: ["sub_frame", "object"]},
                 ["blocking", "responseHeaders"]
             );
         }

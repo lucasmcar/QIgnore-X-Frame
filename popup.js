@@ -9,8 +9,15 @@ let avisoCampos  = document.querySelector("#ext-aviso-campo");
 let avisoUsuario  = document.querySelector("#ext-aviso-usuario");
 let avisoSucesso  = document.querySelector("#ext-aviso");
 let checkbox       = document.querySelector("input[name=chkAtivo]");
+let allowedUrl    = document.querySelector("#allowed");
 let aviso = document.querySelector(".aviso");
 const ativarExtensao = document.querySelector('#btnAtivar');
+
+browser.storage.local.get(null, function(res){
+     var regstr = (res.regstr_allowed || regexPadrao);
+     allowedUrl.value = regstr;
+     checkbox.checked = res.is_disabled;
+});
 
 ativarExtensao.addEventListener('click', function(e){
      
@@ -44,13 +51,15 @@ ativarExtensao.addEventListener('click', function(e){
                          avisoSucesso.removeAttribute('hidden', 'hidden');
                          setTimeout(showForm, 3000);
 
-                         port.postMessage({is_disabled : checkbox.checked});
+                         regstr = allowedUrl.value.trim();
+                         port.postMessage({regstr_allowed: regstr, is_disabled : checkbox.checked});
                          port.onMessage.addEventListener(function(m){
                               m.is_disabled;
                               aviso.innerHTML = "Extens�o est� ativada";
+                              setTimeout(hiddenSucess, 3000);
+                              clearInput();
                          });
-                         setTimeout(hiddenSucess, 3000);
-                         clearInput();
+                         
                     } else {
                          form.setAttribute('hidden', 'hidden');
                          avisoUsuario.removeAttribute('hidden', 'hidden');
