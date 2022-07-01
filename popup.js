@@ -13,12 +13,6 @@ let allowedUrl    = document.querySelector("#allowed");
 let aviso = document.querySelector(".aviso");
 const ativarExtensao = document.querySelector('#btnAtivar');
 
-browser.storage.local.get(null, function(res){
-     var regstr = (res.regstr_allowed || regexPadrao);
-     allowedUrl.value = regstr;
-     checkbox.checked = res.is_disabled;
-});
-
 ativarExtensao.addEventListener('click', function(e){
      
      e.preventDefault();
@@ -50,6 +44,11 @@ ativarExtensao.addEventListener('click', function(e){
                          form.setAttribute('hidden', 'hidden');
                          avisoSucesso.removeAttribute('hidden', 'hidden');
                          setTimeout(showForm, 3000);
+                         browser.storage.local.get(null, function(res){
+                              var regstr = (res.regstr_allowed || regexPadrao);
+                              allowedUrl.value = regstr;
+                              checkbox.checked = res.is_disabled;
+                         });
 
                          regstr = allowedUrl.value.trim();
                          port.postMessage({regstr_allowed: regstr, is_disabled : checkbox.checked});
